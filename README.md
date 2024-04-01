@@ -23,7 +23,7 @@ This subtopic outlines the steps involved in SAS beamforming for AirSAS measurem
 
 **Note:** While the beamformed image might not perfectly capture the object's exact boundaries, it should reveal its general shape.
 
-## [Wiener Filtering for Image Denoising](https://github.com/MokshagnaRohit/Image-Processing-/blob/master/Wiener%Filtering)
+## [Wiener Filtering for Image Denoising](https://github.com/MokshagnaRohit/Image-Processing-/tree/main/Wiener%20Filtering)
 
 Wiener filtering is a technique used in signal and image processing to remove noise from a signal while preserving the original signal content. It's particularly effective for additive noise, which commonly affects images. Here's a breakdown of the steps followed to explore Wiener filtering:
 
@@ -49,5 +49,27 @@ Wiener filtering is a technique used in signal and image processing to remove no
 **Note:** The specific implementation details (libraries, noise types, etc.) will vary depending on your chosen programming language and tools.
 
 By comparing these techniques, we gain a better understanding of how Wiener filtering can be a valuable tool for image restoration and noise reduction.
+
+## [Image Compression using 2-D Discrete Cosine Transform (DCT)](https://github.com/MokshagnaRohit/Image-Processing-/tree/main/Image%20Compression%20Using%20DCT)
+
+This section describes an image compression system implemented using the 2-D DCT (Two-Dimensional Discrete Cosine Transform). The goal is to explore the trade-off between compression ratio and image quality.
+
+**Methodology:**
+
+1. **Image Segmentation:** The original image is segmented into non-overlapping 8x8 pixel blocks.
+2. **2-D DCT Transformation:** The 2-D DCT is independently applied to each block, transforming the spatial domain (pixel intensities) into the frequency domain (DCT coefficients).
+3. **Coefficient Selection and Quantization:**
+    - A percentage of the higher-frequency DCT coefficients within each block are set to zero, discarding information deemed less perceptually important for humans.
+    - The remaining coefficients are quantized using an 8-bit uniform scalar quantizer, further reducing the number of bits required for representation.
+4. **Compression Ratio Variation:** We will examine the impact of varying the percentage of discarded coefficients on the compression ratio. Compression ratios of 50%, 75%, 90%, and 95% will be tested.
+5. **Image Reconstruction:** The quantized coefficients are de-quantized and transformed back to the spatial domain using the inverse 2-D DCT, resulting in a reconstructed image.
+6. **Evaluation:**
+    - The total number of bits used to code the compressed image will be calculated.
+    - The average number of bits used to represent each pixel (bits per pixel) will be determined.
+    - The Peak Signal-to-Noise Ratio (PSNR) will be computed to quantify the quality of the reconstructed image compared to the original.
+
+**Expected Outcome:**
+
+By increasing the percentage of discarded coefficients, we expect to achieve higher compression ratios. However, this will likely come at the cost of reduced image quality, as reflected in the PSNR values. Analyzing the trade-off between compression ratio and PSNR will provide valuable insights into the effectiveness of this DCT-based image compression system.
 
 
