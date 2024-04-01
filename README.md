@@ -1,7 +1,8 @@
 # Image-Processing
 This is a collection of  various Image Processing codes and projects I worked on. 
 
-## [SAS Beamforming](https://github.com/MokshagnaRohit/Image-Processing-/blob/master/SAS%20Beamforming)
+## Image Enhancement and Filtering
+### [SAS Beamforming](https://github.com/MokshagnaRohit/Image-Processing-/blob/master/SAS%20Beamforming)
 This subtopic outlines the steps involved in SAS beamforming for AirSAS measurements:
 
 1. **Preprocessing:**
@@ -23,7 +24,7 @@ This subtopic outlines the steps involved in SAS beamforming for AirSAS measurem
 
 **Note:** While the beamformed image might not perfectly capture the object's exact boundaries, it should reveal its general shape.
 
-## [Wiener Filtering for Image Denoising](https://github.com/MokshagnaRohit/Image-Processing-/tree/main/Wiener%20Filtering)
+### [Wiener Filtering for Image Denoising](https://github.com/MokshagnaRohit/Image-Processing-/tree/main/Wiener%20Filtering)
 
 Wiener filtering is a technique used in signal and image processing to remove noise from a signal while preserving the original signal content. It's particularly effective for additive noise, which commonly affects images. Here's a breakdown of the steps followed to explore Wiener filtering:
 
@@ -49,6 +50,40 @@ Wiener filtering is a technique used in signal and image processing to remove no
 **Note:** The specific implementation details (libraries, noise types, etc.) will vary depending on your chosen programming language and tools.
 
 By comparing these techniques, we gain a better understanding of how Wiener filtering can be a valuable tool for image restoration and noise reduction.
+
+### [Wavelet Denoising](https://github.com/MokshagnaRohit/Image-Processing-/tree/main/Wavelet%20Denoising)
+
+This section describes the implementation of two image-denoising systems using the 2-D Stationary Wavelet Transform (SWT) in MATLAB. The goal is to explore the effectiveness of SWT for noise reduction in the "lena512noisy.bmp" image. 
+
+**Methodology:**
+
+1. **Image Decomposition:** The noisy image is decomposed into subbands using two different SWT schemes:
+    - **16-band dyadic (pyramid) decomposition:** The image is decomposed into 16 equal-sized subbands, representing different frequency levels.
+    - **22-band modified pyramid decomposition:** The image undergoes an initial decomposition into 16 subbands, followed by two additional levels of decomposition applied only to the lowest-frequency subband, resulting in a total of 22 subbands.
+
+2. **Thresholding and Reconstruction:**
+    - For the dyadic decomposition:
+        - The highest-frequency subband, the three highest-frequency subbands, and the six highest-frequency subbands are assumed to be dominated by noise and set to zero.
+        - The remaining coefficients (lower-frequency subbands) are left unchanged.
+    - For the modified pyramid decomposition:
+        - The three highest-frequency subbands, the 10 highest-frequency subbands, and the 15 highest-frequency subbands are set to zero.
+        - The remaining coefficients are preserved.
+    - In both cases, the inverse SWT is applied to reconstruct the image using the modified coefficients.
+
+3. **Evaluation:**
+    - The reconstructed images from each decomposition scheme are displayed.
+    - The perceived quality of each reconstructed image is assessed visually, focusing on noise reduction and potential artifacts.
+
+4. **Frequency Domain Analysis:**
+    - For each case (original noisy image, reconstructed images from both decompositions), the 2-D Discrete Fourier Transform (DFT) magnitude spectrum is computed and plotted.
+    - The frequency spectrum visualizations are compared, analyzing how the denoising process affects the distribution of frequency components.
+
+**Expected Outcome:**
+
+We anticipate that reconstructed images obtained through SWT-based thresholding will exhibit reduced noise compared to the original noisy image. The modified pyramid decomposition might offer more flexibility in noise removal due to its finer subband structure. Analyzing the visual quality and frequency spectrums will provide insights into the effectiveness of each SWT denoising approach.
+
+**Note:** The specific SWT filter chosen in MATLAB will be mentioned in the code implementation itself (not included here). Techniques like edge padding or reflection can be used to eliminate edge effects during the SWT decomposition. 
+Read more at [doc](https://github.com/MokshagnaRohit/Image-Processing-/blob/main/Wavelet%20Denoising/Student_Report.pdf)
 
 ## [Image Compression using 2-D Discrete Cosine Transform (DCT)](https://github.com/MokshagnaRohit/Image-Processing-/tree/main/Image%20Compression%20Using%20DCT)
 
