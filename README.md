@@ -83,7 +83,16 @@ This section describes the implementation of two image-denoising systems using t
 We anticipate that reconstructed images obtained through SWT-based thresholding will exhibit reduced noise compared to the original noisy image. The modified pyramid decomposition might offer more flexibility in noise removal due to its finer subband structure. Analyzing the visual quality and frequency spectrums will provide insights into the effectiveness of each SWT denoising approach.
 
 **Note:** The specific SWT filter chosen in MATLAB will be mentioned in the code implementation itself (not included here). Techniques like edge padding or reflection can be used to eliminate edge effects during the SWT decomposition. 
-Read more at [doc](https://github.com/MokshagnaRohit/Image-Processing-/blob/main/Wavelet%20Denoising/Student_Report.pdf)
+Read more at [doc.](https://github.com/MokshagnaRohit/Image-Processing-/blob/main/Wavelet%20Denoising/Student_Report.pdf)
+
+### [Edge enhancement](https://github.com/MokshagnaRohit/Image-Processing-/tree/main/Edge%20Enchancement)
+Edge enhancement of “airplane_grayscale.png” image using Roberts gradient convolution masks to 
+generate five gradient images with different values of T, LG, and LB. 
+1. **Threshold (T)**: A threshold value will be used to binarize the gradient image obtained from convolution. Pixel values above the threshold will be considered edges, while those below will be set to zero.
+2. **Lower bound (LB)**: This value will clip the negative values in the gradient image before thresholding.
+3. **Upper bound (UB)**: This value will clip the positive values in the gradient image before thresholding.
+
+Read more at [doc.](https://github.com/MokshagnaRohit/Image-Processing-/blob/main/Edge%20Enchancement/Documentation.pdf)
 
 ## [Image Compression using 2-D Discrete Cosine Transform (DCT)](https://github.com/MokshagnaRohit/Image-Processing-/tree/main/Image%20Compression%20Using%20DCT)
 
