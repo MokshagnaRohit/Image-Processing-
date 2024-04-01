@@ -23,7 +23,7 @@ This subtopic outlines the steps involved in SAS beamforming for AirSAS measurem
 
 **Note:** While the beamformed image might not perfectly capture the object's exact boundaries, it should reveal its general shape.
 
-## [Wiener Filtering for Image Denoising](https://github.com/MokshagnaRohit/Image-Processing-/blob/master/Wiener%Filtering)
+## [Wiener Filtering for Image Denoising](https://github.com/MokshagnaRohit/Image-Processing-/tree/main/Image%20Compression%20Using%20DCT)
 
 Wiener filtering is a technique used in signal and image processing to remove noise from a signal while preserving the original signal content. It's particularly effective for additive noise, which commonly affects images. Here's a breakdown of the steps followed to explore Wiener filtering:
 
@@ -50,7 +50,7 @@ Wiener filtering is a technique used in signal and image processing to remove no
 
 By comparing these techniques, we gain a better understanding of how Wiener filtering can be a valuable tool for image restoration and noise reduction.
 
-## [Image Compression using 2-D Discrete Cosine Transform (DCT)](https://github.com/MokshagnaRohit/Image-Processing-/blob/master/Image%Compression%Using%DCT)
+## [Image Compression using 2-D Discrete Cosine Transform (DCT)](https://github.com/MokshagnaRohit/Image-Processing-/tree/main/Wiener%20Filtering)
 
 This section describes an image compression system implemented using the 2-D DCT (Two-Dimensional Discrete Cosine Transform). The goal is to explore the trade-off between compression ratio and image quality.
 
