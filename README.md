@@ -243,4 +243,93 @@ This part explores various image processing techniques in the frequency domain u
 7. Experiment with modifying the phase information in different ways (e.g., scaling, adding noise) to explore its impact on the reconstructed image.
   - Analyze how these modifications affect the visual properties and potentially introduce artifacts.
 
+### [2D Image Transformations and Feature Matching](https://github.com/MokshagnaRohit/Image-Processing-/tree/main/2D%20image%20transformations)
 
+This section explores basic 2D image transformations (translation, rotation) and feature matching using custom detectors and descriptors. We'll utilize OpenCV for image manipulation and potentially reference external libraries like NumPy for numerical computations.
+
+**Implementation:**
+
+**(1) Image Creation, Translation, and Rotation:**
+
+1. **Image Generation:** Create a 300x300 pixel image filled with black background using OpenCV's `cv2.zeros()` function.
+2. **Quadrilateral Creation:** Draw a white irregular quadrilateral of approximately 50x50 pixels centered on the black background using drawing functions like `cv2.line()` or `cv2.rectangle()` with appropriate corner coordinates.
+3. **Translation:** Apply a translation of (30, 100) to the image using `cv2.warpAffine()` or a similar function.
+4. **Rotation:** Rotate the translated image by 45 degrees around its original center using `cv2.getRotationMatrix2D()` and `cv2.warpAffine()`.
+5. **Display Transformed Image:** Display the final image with the rotated quadrilateral.
+
+**(2) Custom Feature Detector and Descriptor:**
+
+**Note:** This section emphasizes a custom approach. Built-in detectors/descriptors are not used here.
+
+1. **Feature Detector Design:** Develop a simple feature detection algorithm to identify corner-like regions in the image. This could involve methods like:
+    - **Harris Corner Detection:** Implement Harris corner detection from scratch, calculating corner response scores based on image gradients and windowing. Identify pixels with high response scores as potential corners.
+    - **Simpler Corner Detection:** Explore alternative methods like finding points with high intensity gradients in two perpendicular directions, indicating potential corner locations.
+
+2. **Descriptor Design:** Create a custom descriptor that captures the local image patch surrounding each detected corner. This could involve:
+    - **Intensity Patch:** Extract a small square image patch centered on the corner as a descriptor, representing local intensity variations.
+    - **Gradient Histogram:** Compute a local gradient histogram within the patch, capturing the distribution of edge orientations.
+
+**(3) Feature Matching and Homography Estimation:**
+
+1. **Matching Features:** Implement a feature matching algorithm to find corresponding corners between the original and transformed images using the custom descriptors. This may involve comparing descriptor distances (e.g., Euclidean distance) and selecting best matches based on a threshold.
+2. **Subset Selection:** Choose a minimal number of reliable corner correspondences (e.g., four non-colinear points) for robust homography estimation.
+3. **Homography Estimation:** Formulate a linear least squares system based on the corresponding points and solve for the homography matrix (combining translation, rotation, and scaling).
+
+**Expected Outcome:**
+
+- The image transformations and visualization demonstrate the applied translation and rotation.
+- The custom feature detector and descriptor should identify and describe corner-like regions in the images.
+- The feature matching and homography estimation should ideally recover the original translation and rotation parameters used in step (1).
+
+**Note:**
+
+- The specific implementation details (function definitions, library usage) will depend on your chosen programming language and tools.
+- This breakdown provides a framework for exploring basic 2D transformations and feature matching with custom algorithms. Consider exploring existing feature detectors and descriptors (e.g., SIFT, SURF) for more sophisticated approaches.
+
+### [Image Stitching with Feature Matching and RANSAC](https://github.com/MokshagnaRohit/Image-Processing-/tree/main/Image%20Stitching)
+
+This section explores image stitching, a technique for creating panoramic views by combining multiple overlapping images. We'll utilize the SIFT (Scale-Invariant Feature Transform) algorithm for feature detection and matching, followed by RANSAC (RANdom SAmple Consensus) for robust homography estimation. OpenCV will be used for image processing and visualization.
+
+**Implementation:**
+
+**(1) Image Capture:**
+
+1. Capture at least four overlapping images of a suitable scene using your phone camera.
+2. Display the captured images in your report to visualize the scene being stitched.
+
+**(2) Reference Image Selection:**
+
+1. Choose one image as the reference frame. The middle image of the sequence is often preferred for minimal distortion, but any image can be chosen.
+2. Discuss the challenges associated with choosing end images as the reference frame and potential solutions (e.g., composing homographies).
+
+**(3) Feature Matching:**
+
+1. **SIFT Feature Detection:** Use OpenCV's `cv2.xfeatures2d.SIFT_create()` function to detect SIFT features in each image.
+2. **Descriptor Extraction:** Extract SIFT descriptors for each detected feature using `sift.compute()`.
+3. **Pairwise Matching:** For each pair of images (excluding the reference image):
+    - Compute pairwise Euclidean distances between all descriptor pairs.
+    - Implement thresholding based on the ratio of the first and second nearest neighbor distances as described in Lowe's paper ([http://matthewalunbrown.com/papers/cvpr05.pdf](http://matthewalunbrown.com/papers/cvpr05.pdf)). Refer to Figure 6b for threshold selection.
+    - Select feature pairs with a ratio below the threshold as tentative correspondences.
+4. **Visualization:** Display a reasonable number of tentative feature correspondences between two images to visually assess the matching quality.
+
+**(4) Homography Estimation with RANSAC:**
+
+1. **RANSAC Algorithm:** For each image pair (excluding the reference image):
+    - Use OpenCV's `cv2.findHomography()` function with the RANSAC flag enabled to estimate the homography matrix that relates the image to the reference frame.
+    - Document the parameters used for `cv2.findHomography()`, such as the maximum reprojection error threshold and the number of RANSAC iterations.
+2. **Homography Analysis:**
+    - Report the estimated homography matrix for each image pair.
+    - Calculate the reprojection error for each matched feature using the estimated homography.
+    - Analyze the average and distribution of the reprojection errors to evaluate the accuracy of homography estimation.
+
+**(5) Warping and Compositing:**
+
+1. **Image Warping:** For each image (excluding the reference image):
+    - Use OpenCV's `cv2.warpPerspective()` function with the estimated homography to warp the image into the reference frame's perspective.
+2. **Mosaic Creation:** Combine the warped images and the reference image into a single panoramic mosaic image.
+3. **Display Final Stitched Image:** Display the final stitched panorama to visualize the combined scene.
+
+**Note:**
+
+- The specific implementation details (function calls, parameter values) might vary slightly depending on the OpenCV version and coding style.
+- This breakdown provides a framework for image stitching using SIFT feature matching and RANSAC-based homography estimation. Consider exploring advanced techniques like bundle adjustment for further refinement.
