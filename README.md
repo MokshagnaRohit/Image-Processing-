@@ -1,6 +1,9 @@
 # Image-Processing
 This is a collection of  various Image Processing codes and projects I worked on. 
 
+## Contents
+
+
 ## [SAS Beamforming](https://github.com/MokshagnaRohit/Image-Processing-/blob/master/SAS%20Beamforming)
 This subtopic outlines the steps involved in SAS beamforming for AirSAS measurements:
 
@@ -333,3 +336,51 @@ This section explores image stitching, a technique for creating panoramic views 
 
 - The specific implementation details (function calls, parameter values) might vary slightly depending on the OpenCV version and coding style.
 - This breakdown provides a framework for image stitching using SIFT feature matching and RANSAC-based homography estimation. Consider exploring advanced techniques like bundle adjustment for further refinement.
+
+## [Pinspeck Cameras: Exploring Accidental Imaging](https://github.com/MokshagnaRohit/Image-Processing-/tree/main/Pinspeck%20Camera)
+
+This section investigates pinspeck cameras, also known as anti-pinhole cameras, and their applications for extracting scene information. We'll reference the paper "Accidental Pinhole and Pinspeck Cameras" by Torralba and Freeman ([https://people.csail.mit.edu/torralba/research/accidentalcameras/](https://people.csail.mit.edu/torralba/research/accidentalcameras/)) and utilize OpenCV for video processing.
+
+**Implementation**
+
+**(a) Paper Review:**
+
+Read and summarize the key points of the Torralba and Freeman paper:
+
+- Understand the concept of pinspeck cameras and their characteristics.
+- Explore the applications discussed in the paper (e.g., revealing hidden scenes).
+
+**(b) Movie Loading:**
+
+1. **Function Implementation:** Write a function `load_video(video_path)` that takes a video file path as input and uses `cv2.VideoCapture()` to read the video.
+2. **Video Processing:** Within the function, iterate through each frame of the video for further processing.
+
+**(c) Difference Video:**
+
+1. **Reference Frame Selection:** Refer to the Torralba and Freeman paper for strategies on choosing a reference frame for background subtraction. You can choose:
+    - The first frame (assuming static background initially).
+    - The median of multiple frames to capture a more robust background representation.
+2. **Difference Image Calculation:** For each frame (excluding the reference frame):
+    - Calculate the absolute difference between the current frame and the reference frame using `cv2.absdiff()`.
+3. **Visualization:** Display or save the resulting difference video, analyzing it for potential pinspeck camera effects (e.g., sudden appearance/disappearance of objects outside the window).
+
+**(d) Pinspeck Region Isolation:**
+
+1. **Manual Selection:** Identify a time segment in the difference video where changes outside the window suggest potential pinspeck camera effects.
+2. **ROI Extraction:** Extract the corresponding frames from the original video that belong to the isolated segment.
+
+**(e) Pinspeck Image Recreation:**
+
+1. **Image Capture:** Using your camera or phone, capture two images:
+    - An image of the background scene.
+    - An image of the same scene with an occluder (e.g., your finger) partially covering the lens, creating a pinspeck effect.
+2. **Difference Image:** Calculate the difference between the images with and without the occluder.
+3. **Ground Truth:** Capture a clear image of the scene outside the window/pinspeck opening.
+4. **Comparison:** Visually compare the difference image obtained from your pinspeck recreation with the ground truth scene outside the window. Observe if the pinspeck effect reveals any hidden information.
+
+**Note:**
+
+- The specific implementation details (function arguments, OpenCV parameter values) might vary depending on your coding style and chosen tools.
+- This breakdown provides a framework for exploring pinspeck cameras using video processing techniques.
+- Consider experimenting with different reference frame selection strategies and analyzing the impact on the difference video.
+
