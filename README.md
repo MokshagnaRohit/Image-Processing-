@@ -1,8 +1,7 @@
 # Image-Processing
 This is a collection of  various Image Processing codes and projects I worked on. 
 
-## Image Enhancement and Filtering
-### [SAS Beamforming](https://github.com/MokshagnaRohit/Image-Processing-/blob/master/SAS%20Beamforming)
+## [SAS Beamforming](https://github.com/MokshagnaRohit/Image-Processing-/blob/master/SAS%20Beamforming)
 This subtopic outlines the steps involved in SAS beamforming for AirSAS measurements:
 
 1. **Preprocessing:**
@@ -24,6 +23,7 @@ This subtopic outlines the steps involved in SAS beamforming for AirSAS measurem
 
 **Note:** While the beamformed image might not perfectly capture the object's exact boundaries, it should reveal its general shape.
 
+## Image Enhancement and Filtering
 ### [Wiener Filtering for Image Denoising](https://github.com/MokshagnaRohit/Image-Processing-/tree/main/Wiener%20Filtering)
 
 Wiener filtering is a technique used in signal and image processing to remove noise from a signal while preserving the original signal content. It's particularly effective for additive noise, which commonly affects images. Here's a breakdown of the steps followed to explore Wiener filtering:
@@ -115,5 +115,132 @@ This section describes an image compression system implemented using the 2-D DCT
 **Expected Outcome:**
 
 By increasing the percentage of discarded coefficients, we expect to achieve higher compression ratios. However, this will likely come at the cost of reduced image quality, as reflected in the PSNR values. Analyzing the trade-off between compression ratio and PSNR will provide valuable insights into the effectiveness of this DCT-based image compression system.
+
+I'd be glad to provide a formatted response combining the best aspects of previous responses and addressing potential issues, while adhering to GitHub Markdown formatting and avoiding code inclusion:
+
+## Advanced Image Processing - Image Blending
+### [Hybrid Images](https://github.com/MokshagnaRohit/Image-Processing-/blob/main/Image%20Blending/Hybrid_images.ipynb)
+Take two images (of your choice), and try the hybrid images approach from the paper from Olivia et al http://olivalab.mit.edu/publications/OlivaTorralb_Hybrid_Siggraph06.pdf.
+
+**Implementation:**
+
+1. Select two images with complementary spatial frequency content (e.g., high-frequency facial details in one image and low-frequency scene information in another).
+2. Compute the Fourier transform of both images.
+3. Design a hybrid filter that assigns high-frequency content from one image and low-frequency content from the other image. This may involve using weighted averaging or other techniques.
+4. Apply the hybrid filter to the respective magnitude components of the Fourier transforms.
+5. Perform the inverse Fourier transform to reconstruct the hybrid image.
+6. Display the original images and the resulting hybrid image.
+  - Observe how the hybrid image combines visual elements from both source images.
+
+**Note:**
+
+- The specific implementation details will vary depending on the chosen libraries and filter design methods.
+- Experiment with different filter shapes and parameters to explore their effects on image processing results.
+- Reference the provided paper by Oliva et al. ([http://olivalab.mit.edu/hybridimage.htm](http://olivalab.mit.edu/hybridimage.htm)) for further details on hybrid image creation.
+
+### [Multiresolution Blending using Gaussian/Laplacian Pyramids](https://github.com/MokshagnaRohit/Image-Processing-/blob/main/Image%20Blending/Blending.ipynb)
+
+This section explores multiresolution blending, a technique for seamlessly merging multiple images. We'll reference the paper by Burt and Adelson ([http://ai.stanford.edu/~kosecka/burt-adelson-spline83.pdf](http://ai.stanford.edu/~kosecka/burt-adelson-spline83.pdf)) for theoretical background.
+
+**Implementation:**
+
+**(a) Image Selection and Blending Goal:**
+
+1. **Choose Images:** Select two or more images for blending. Be creative! Consider factors like:
+    - Desired visual effect (e.g., panoramic view from multiple images, combining object and background)
+    - Complementary content (images with overlapping or related features)
+    - Compatibility for seamless blending (e.g., similar lighting, perspective)
+
+2. **Explain Purpose:** Describe the type of blending you aim to achieve (e.g., creating a panoramic view, enhancing an object) and why you believe multiresolution blending is a suitable approach for this specific case.
+
+**(b) Gaussian and Laplacian Pyramid Construction:**
+
+1. **Function Implementation:** Write a function `build_pyramids(image)` that takes an image and returns its Gaussian and Laplacian pyramids.
+2. **Pyramid Depth:** Choose a suitable depth for the pyramids (e.g., 3-5 levels). Maintain the same depth for all pyramids in this section for consistency.
+3. **Laplacian Reconstruction:** Verify that the Laplacian pyramid can be reconstructed back to the original image. This step confirms the correctness of your pyramid construction. You can use existing OpenCV functions where appropriate.
+
+**(c) Mask Creation:**
+
+1. **Mask Design:** Design binary masks that define the transition zones between the images you want to blend. Each mask will have a value of 1 in the region where the corresponding image should be visible and 0 in the blending area. 
+2. **Multiple Images:** If blending more than two images, create additional masks to define transitions between each pair.
+
+**(d) Direct Blending:**
+
+1. **Function Implementation:** Write a function `direct_blend(image1, image2, mask)` that takes two images and a mask as input and performs direct blending using the formula:
+
+   ```
+   blended_image = (1 - mask) * image1 + mask * image2
+   ```
+
+2. **Visualization:** Apply the function to your chosen images and mask(s) to generate a directly blended image. Observe the visual result.
+
+**(e) Alpha Blending:**
+
+1. **Mask Smoothing:** Implement a function `blur_mask(mask)` that takes the mask and applies a Gaussian blur to soften the edges. This creates a smoother transition between the images in the blended result.
+2. **Alpha Blending Function:** Write a function `alpha_blend(image1, image2, mask)` that performs alpha blending using the formula:
+
+   ```
+   blended_image = (1 - blur_mask(mask)) * image1 + blur_mask(mask) * image2
+   ```
+
+3. **Visualization:** Apply the alpha blending function to your images and the blurred mask(s). Analyze the result. Does the blended image appear more seamless, resembling a single entity (e.g., one fruit)?
+
+**(f) Multiresolution Blending:**
+
+1. **Function Implementation:** Write a function `multiblend(image1, image2, mask)` that performs multiresolution blending based on the algorithm discussed in class. The function should take the following inputs:
+    - `image1`: First image to be blended
+    - `image2`: Second image to be blended
+    - `mask`: Mask defining the transition region
+2. **Pyramid Construction:** Construct Gaussian pyramids for the mask and Laplacian pyramids for both images using the previously defined depth.
+3. **Multiresolution Blending Algorithm:** Implement the multiresolution blending algorithm step-by-step within the function. This will involve blending corresponding levels of the pyramids and reconstructing the final blended image.
+4. **Parameter Exploration:** Experiment with different parameters within the algorithm (e.g., weighting factors) to achieve a visually pleasing blend.
+
+**Note:**
+
+- The specific implementation details (code structure, library functions) will vary depending on your chosen programming language and tools.
+- This breakdown provides a high-level structure for understanding and implementing multiresolution blending using Gaussian and Laplacian pyramids.
+
+By following these steps and referencing the provided paper, you can implement multiresolution blending to create seamless image compositions.
+
+
+This formatted response provides a concise guide for performing various Fourier domain image processing techniques in Python, while adhering to GitHub Markdown style and avoiding code inclusion. 
+
+## Image Transformation and Manipulation
+
+### [Fourier Domain Image Processing](https://github.com/MokshagnaRohit/Image-Processing-/tree/main/Fourier%20Domain)
+
+This part explores various image processing techniques in the frequency domain using the Fourier transform.
+
+**Implementation:**
+
+**(a) Image Loading and Fourier Transform:**
+
+1. Read an image of your choice using `cv2.imread()` (OpenCV) or `scipy.misc.imread()` (SciPy).
+2. Convert the image to grayscale using `cv2.cvtColor()` (OpenCV) or `scipy.signal.rgb2gray()` (SciPy).
+3. Compute the Fast Fourier Transform (FFT) using `cv2.dft()` (OpenCV) or `scipy.fft.fft2()` (SciPy).
+4. Separate the magnitude and phase components using the absolute value and angle functions.
+5. Plot the magnitude and phase using libraries like Matplotlib ([https://matplotlib.org/](https://matplotlib.org/)).
+
+**(b) Frequency Domain Filtering:**
+
+1. Design the desired filters (low-pass, high-pass, diagonal bandpass) in the frequency domain. This may involve creating masks or modifying the original Fourier spectrum.
+2. Apply the filters to the magnitude component of the Fourier transform.
+3. Set the phase component to zero for low-pass or high-pass filtering (optional for bandpass).
+4. Perform the inverse Fast Fourier Transform (IFFT) using `cv2.idft()` (OpenCV) or `scipy.fft.ifft2()` (SciPy) to obtain the filtered image.
+5. Plot the magnitude of the Fourier transform before and after filtering.
+6. Display the original and filtered images for visual comparison.
+
+**(c) Phase Swapping and Modification:**
+
+1. Load two images of your choice.
+2. Compute the Fourier transform of each image using the methods from step (a).
+3. Separate the magnitude and phase components for both images.
+4. Swap the phase components between the two images.
+5. Perform the inverse Fourier transform to reconstruct the images with swapped phases.
+6. Display the original images and the reconstructed images with swapped phases.
+  - Observe how the visual content is potentially distorted while retaining some low-frequency information.
+
+7. Experiment with modifying the phase information in different ways (e.g., scaling, adding noise) to explore its impact on the reconstructed image.
+  - Analyze how these modifications affect the visual properties and potentially introduce artifacts.
 
 
