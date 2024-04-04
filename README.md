@@ -1,5 +1,5 @@
 # Image-Processing
-This is a collection of  various Image Processing codes and projects I worked on. 
+This repository is a collection of image processing projects I've been working on. Each project includes the source code, along with detailed explanations and steps to guide you through the process. Whether you're a beginner looking to learn the fundamentals or an experienced developer seeking new ideas, this repository can be a valuable resource for your image processing journey.
 
 ## [SAS Beamforming](https://github.com/MokshagnaRohit/Image-Processing-/blob/master/SAS%20Beamforming)
 This subtopic outlines the steps involved in SAS beamforming for AirSAS measurements:
